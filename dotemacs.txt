@@ -23,6 +23,27 @@
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 (require 'inf-ruby) ;; running ruby in emacs
 
+;; 対応する括弧を色付け                                                                                                                                               
+(setq show-paren-delay 0)           ; 初期値は 0.125                                                                                                                  
+(setq show-paren-style 'expression) ; 括弧内も強調表示                                                                                                                
+(show-paren-mode t)                 ; 有効化                                                                                                                          
+
+;; 文字列は 72 文字で折り返し(RFC2822)                                                                                                                                
+(setq-default fill-column 72)
+(setq paragraph-start '"^\\([ 　・○<\t\n\f]\\|(?[0-9a-zA-Z]+)\\)")
+(setq-default auto-fill-mode nil)
+
+;; delete spaces end                                                                                                                                                  
+(defvar my:delete-trailing-whitespace-exclude-suffix
+  (list "\\.rd$" "\\.md$" "\\.rbt$"))
+(defun my:delete-trailing-whitespace ()
+  (interactive)
+  (cond
+   ((equal nil
+           (loop for pattern in my:delete-trailing-whitespace-exclude-suffix
+                 thereis (string-match pattern buffer-file-name)))
+    (delete-trailing-whitespace))))
+(add-hook 'before-save-hook 'my:delete-trailing-whitespace)
 
 ;; Don't display start-page
 (setq inhibit-startup-message t)
@@ -189,6 +210,8 @@
 ;)
 ;;indent設定
 (setq-default indent-tabs-mode nil) ; タブを入力したときにスペースに変換する
+(setq-default tab-width 4)
+
 (setq indent-line-function 'indent-relative-maybe)
 (add-hook 'c-mode-common-hook
       '(lambda ()
