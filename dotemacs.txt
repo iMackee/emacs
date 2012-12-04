@@ -1,0 +1,215 @@
+;; backspace key
+(global-set-key [(control h)] 'delete-backward-char)
+
+;; insert delimit text
+;(defun insert-delimit-text-- ()
+;  (interactive)
+;  (save-excursion
+;    (insert "------------------------")
+;   )
+;  (forward-line 1))
+;(global-set-key (kbd "C-x -") 'insert-delimit-text--)
+
+;(require 'image-dired)
+;(image-dired-standard-keymap-changes)
+
+;; load-path
+(setq load-path (cons "~/.emacs.d/config/" load-path))
+
+; loads ruby mode when a .rb file is opened.
+(add-to-list 'load-path "/PATH_TO_HOME/.emacs.d/config/ruby/")
+(add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
+(autoload 'ruby-mode "ruby-mode" "Major mode for editing Ruby code" t)
+(add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
+(require 'inf-ruby) ;; running ruby in emacs
+
+
+;; Don't display start-page
+(setq inhibit-startup-message t)
+
+;; Hide menu-bar
+;;(tool-bar-mode -1)
+
+;; Show Column-No
+(setq column-number-mode t)
+
+;; K&R StyleCC mode config
+(require 'cc-mode)
+(setq c-default-style "k&r")
+(add-hook 'c-mode-common-hook
+          '(lambda ()
+            (progn
+              (c-toggle-hungry-state 1)
+              (setq c-basic-offset 4 indent-tabs-mode nil))))
+(setq auto-mode-alist
+     (append
+      '(("\\.hpp$" . c++-mode)
+        ("\\.h$"   . c++-mode)
+        ) auto-mode-alist))
+
+;; auto-indent with RET
+;;(global-set-key "\C-m" 'reindent-then-newline-and-indent)
+(global-set-key "\C-j" 'newline)
+
+;; Window configuration
+(if window-system (progn
+ (setq initial-frame-alist '((width . 100) (height . 50) (top . 0) (left .
+0)))
+))
+
+
+;;; uncomment this line to disable loading of "default.el" at startup
+;; (setq inhibit-default-init t)
+
+;; enable visual feedback on selections
+;(setq transient-mark-mode t)
+
+;; default to better frame titles
+;;(setq frame-title-format
+;;      (concat  "%b - %f @ emacs @" (system-name)))
+(setq frame-title-format "%b - %f @ emacs")
+
+;; default to unified diffs
+(setq diff-switches "-u")
+
+;; always end a file with a newline
+;(setq require-final-newline 'query)
+
+;;; uncomment for CJK utf-8 support for non-Asian users
+;; (require 'un-define)
+
+;;;; show line numbers
+(setq column-number-mode t)
+(setq line-number-mode t)
+
+;;;; show data and time
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
+(display-time)
+
+;;;;set kill ring
+(setq kill-ring-max 150)
+
+;;;; Move the mouse when it goes near to the cursor
+(mouse-avoidance-mode 'animate)
+
+;;;;Emacs Server
+;;(server-start)
+
+;;;;Emacs Plan
+;;;;(plan)
+
+;;;;High light current line
+(require 'hl-line)
+(global-hl-line-mode t)
+
+;;;;Enable scroll left and right：C-x <  or  C-x >
+(put 'scroll-left 'disabled nil)
+
+;; Configure the shell color
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(setq ansi-color-for-comint-mode t)
+
+;;;; save all the documents editing when exiting
+;;(load "desktop")
+;;(desktop-save-mode)
+;;(desktop-read)
+
+;;cscope
+;;(require 'xcscope)
+
+;; default directory
+(setq default-directory "/Users/leon.he/Business")
+;(add-to-list 'load-path "/Users/leon.he/")
+
+;; disable bell sound when error happens
+(setq visible-bell t)
+
+;; View image
+(setq auto-image-file-mode t)
+
+(transient-mark-mode t)
+
+;;diable backup file func
+(setq make-backup-files nil)
+
+;(setq default-frame-alist (background-color "black"))
+;(setq default-frame-alist 
+;      '((foreground-color . "black")
+;    (background-color . "ivory3")
+;)
+
+;;(setq default-frame-alist
+;      '((foreground-color . "black")
+;    (background-color . "ivory3")
+;    (top . 2 )
+;    (left . 365)
+;    (width . 80)
+;    (height . 43)))
+;)
+
+;;; uncomment this line to disable loading of "default.el" at startup
+;; (setq inhibit-default-init t)
+
+;; enable visual feedback on selections
+;(setq transient-mark-mode t)
+
+;; default to unified diffs
+(setq diff-switches "-u")
+
+;; always end a file with a newline
+;(setq require-final-newline 'query)
+
+;;; uncomment for CJK utf-8 support for non-Asian users
+;; (require 'un-define)
+
+;;; mac back key
+(global-set-key (kbd "<delete>") 'delete-char)
+(global-set-key [(control h)] 'delete-backward-char)
+
+;;cscope
+;;(require 'xcscope)
+
+(transient-mark-mode t)
+
+;(setq default-frame-alist (background-color "black"))
+;(setq default-frame-alist 
+;      '((foreground-color . "black")
+;    (background-color . "ivory3")
+;)
+
+;;(setq default-frame-alist
+;      '((foreground-color . "black")
+;    (background-color . "ivory3")
+;    (top . 2 )
+;    (left . 365)
+;    (width . 80)
+;    (height . 43)))
+;)
+;;indent設定
+(setq-default indent-tabs-mode nil) ; タブを入力したときにスペースに変換する
+(setq indent-line-function 'indent-relative-maybe)
+(add-hook 'c-mode-common-hook
+      '(lambda ()
+         (setq c-auto-newline t)    ; これは・・・なんだったか忘れてもうた
+         (c-set-style "stroustrup")
+         (setq c-basic-offset 4)))  ; タブ幅を半角スペース4つ分に
+
+(put 'narrow-to-region 'disabled nil)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(display-battery-mode t)
+ '(display-time-mode t)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
