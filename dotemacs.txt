@@ -28,6 +28,16 @@
 (setq show-paren-style 'expression) ; 括弧内も強調表示                                                                                                                
 (show-paren-mode t)                 ; 有効化                                                                                                                          
 
+;; Highlight "TODO:", "FIXME:", "BUG:" in C, Text mode
+(add-hook 'c-mode-common-hook
+               (lambda ()
+                (font-lock-add-keywords nil
+                 '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+(add-hook 'text-mode-hook
+               (lambda ()
+                (font-lock-add-keywords nil
+                 '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+
 ;; 文字列は 72 文字で折り返し(RFC2822)                                                                                                                                
 (setq-default fill-column 72)
 (setq paragraph-start '"^\\([ 　・○<\t\n\f]\\|(?[0-9a-zA-Z]+)\\)")
