@@ -17,16 +17,16 @@
 (setq load-path (cons "~/.emacs.d/config/" load-path))
 
 ; loads ruby mode when a .rb file is opened.
-(add-to-list 'load-path "/PATH_TO_HOME/.emacs.d/config/ruby/")
+(add-to-list 'load-path "~/.emacs.d/config/ruby/")
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (autoload 'ruby-mode "ruby-mode" "Major mode for editing Ruby code" t)
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 (require 'inf-ruby) ;; running ruby in emacs
 
-;; 対応する括弧を色付け                                                                                                                                               
-(setq show-paren-delay 0)           ; 初期値は 0.125                                                                                                                  
-(setq show-paren-style 'expression) ; 括弧内も強調表示                                                                                                                
-(show-paren-mode t)                 ; 有効化                                                                                                                          
+;; 対応する括弧を色付け
+(setq show-paren-delay 0)           ; 初期値は 0.125
+(setq show-paren-style 'expression) ; 括弧内も強調表示
+(show-paren-mode t)                 ; 有効化
 
 ;; Highlight "TODO:", "FIXME:", "BUG:" in C, Text mode
 (add-hook 'c-mode-common-hook
@@ -38,12 +38,12 @@
                 (font-lock-add-keywords nil
                  '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 
-;; 文字列は 72 文字で折り返し(RFC2822)                                                                                                                                
+;; 文字列は 72 文字で折り返し(RFC2822)
 (setq-default fill-column 72)
 (setq paragraph-start '"^\\([ 　・○<\t\n\f]\\|(?[0-9a-zA-Z]+)\\)")
 (setq-default auto-fill-mode nil)
 
-;; delete spaces end                                                                                                                                                  
+;; delete spaces end
 (defvar my:delete-trailing-whitespace-exclude-suffix
   (list "\\.rd$" "\\.md$" "\\.rbt$"))
 (defun my:delete-trailing-whitespace ()
@@ -151,7 +151,7 @@
 ;;(require 'xcscope)
 
 ;; default directory
-(setq default-directory "/Users/leon.he/Business")
+;(setq default-directory "/Users/leon.he/Business")
 ;(add-to-list 'load-path "/Users/leon.he/")
 
 ;; disable bell sound when error happens
@@ -166,7 +166,7 @@
 (setq make-backup-files nil)
 
 ;(setq default-frame-alist (background-color "black"))
-;(setq default-frame-alist 
+;(setq default-frame-alist
 ;      '((foreground-color . "black")
 ;    (background-color . "ivory3")
 ;)
@@ -205,7 +205,7 @@
 (transient-mark-mode t)
 
 ;(setq default-frame-alist (background-color "black"))
-;(setq default-frame-alist 
+;(setq default-frame-alist
 ;      '((foreground-color . "black")
 ;    (background-color . "ivory3")
 ;)
