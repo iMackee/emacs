@@ -1,6 +1,9 @@
 ;; backspace key
 (global-set-key [(control h)] 'delete-backward-char)
 
+; enable folder deletion in dird mode
+(setq dired-recursive-deletes 'top)
+
 ;; insert delimit text
 ;(defun insert-delimit-text-- ()
 ;  (interactive)
