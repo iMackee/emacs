@@ -4,6 +4,22 @@
 ; enable folder deletion in dird mode
 (setq dired-recursive-deletes 'top)
 
+;; Insert date with format                                                                                                                                                    
+;; ‘C-c d’: 2013.01.23                                                                                                                                      
+;; ‘C-u C-c d’: 2013-01-23                                                                                                                                  
+;; ‘C-u C-u C-c d’: Wednesday, 23. January 2013                                                                                                             
+(defun insert-date (prefix)
+    "Insert the current date. With prefix-argument, use ISO format. With                                                                                    
+   two prefix arguments, write out the day and month name."
+    (interactive "P")
+    (let ((format (cond
+                   ((not prefix) "%Y.%m.%d")
+                   ((equal prefix '(4)) "%Y-%m-%d")
+                   ((equal prefix '(16)) "%A, %d. %B %Y")))
+          (system-time-locale "jp_JP"))
+      (insert (format-time-string format))))
+(global-set-key (kbd "C-c d") 'insert-date)
+
 ;; insert delimit text
 ;(defun insert-delimit-text-- ()
 ;  (interactive)
