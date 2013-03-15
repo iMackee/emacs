@@ -1,0 +1,4 @@
+M-^
+  runs the command delete-indentation, which is an interactive compiled Lisp function in `simple.el'.
+M-Space
+  Fixup white space between objects around point. Leave one space or none, according to the context.
