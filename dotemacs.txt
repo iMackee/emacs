@@ -4,13 +4,13 @@
 ; enable folder deletion in dird mode
 (setq dired-recursive-deletes 'top)
 
-;; Insert date with format                                                                                                                                                    
-;; ‘C-c d’: 2013.01.23                                                                                                                                      
-;; ‘C-u C-c d’: 2013-01-23                                                                                                                                  
-;; ‘C-u C-u C-c d’: Wednesday, 23. January 2013                                                                                                             
+;; Insert date with format
+;; ‘C-c d’: 2013.01.23
+;; ‘C-u C-c d’: 2013-01-23
+;; ‘C-u C-u C-c d’: Wednesday, 23. January 2013
 (defun insert-date (prefix)
-    "Insert the current date. With prefix-argument, use ISO format. With                                                                                    
-   two prefix arguments, write out the day and month name."
+    "Insert the current date. With prefix-argument, use ISO format. With
+     two prefix arguments, write out the day and month name."
     (interactive "P")
     (let ((format (cond
                    ((not prefix) "%Y.%m.%d")
@@ -19,6 +19,76 @@
           (system-time-locale "jp_JP"))
       (insert (format-time-string format))))
 (global-set-key (kbd "C-c d") 'insert-date)
+
+;; Auto insert skeleton
+(eval-after-load 'autoinsert
+  '(define-auto-insert
+     '("\\.c\\'" . "C skeleton")
+     '("Short description: "
+       "/**\n * "
+       (file-name-nondirectory (buffer-file-name))
+       " -- " str \n
+       " *" > \n
+       " * Author: Leon (leon(at)gmail.com) " > \n
+       " * Date  : " (format-time-string "%Y-%m-%d [%A, %j]") > \n
+       " */" > \n \n
+       "#include <stdio.h>" \n
+       "#include \""
+       (file-name-sans-extension
+        (file-name-nondirectory (buffer-file-name)))
+       ".h\"" \n \n
+       "int main(int argc, char* argv[])" \n
+       "{" > \n
+       > _ \n
+       "return 0;" > \n
+       "}" > \n)))
+
+;; upcase <-> downcase
+(eval-after-load 'autoinsert
+  '(define-auto-insert
+     '("\\.h\\'" . "Header skeleton")
+     '("Short description: "
+       "/**\n * "
+       (file-name-nondirectory (buffer-file-name))
+       " -- " str \n
+       " *" > \n
+       " * Author: Leon (leon(at)gmail.com) " > \n
+       " * Date  : " (format-time-string "%Y-%m-%d [%A, %j]") > \n
+       " */" > \n \n
+       "#ifndef _HEADER_"
+       (upcase
+        (file-name-base (buffer-file-name)))
+       "_H_" \n
+       "#define _HEADER_"
+       (upcase
+        (file-name-base (buffer-file-name)))
+       "_H_" > \n
+       \n
+       > _ \n \n
+       "#endif /* ~_HEADER_"
+       (upcase
+        (file-name-base (buffer-file-name)))
+       "_H_ */" > \n
+       )))
+
+(eval-after-load 'autoinsert
+  '(define-auto-insert
+     '("\\.\\(CC?\\|cc\\|cxx\\|cpp\\|c++\\)\\'" . "C++ skeleton")
+     '("Short description: "
+       "/**\n * "
+       (file-name-nondirectory (buffer-file-name))
+       " -- " str \n
+       " * Author: Leon (leon(at)gmail.com) " > \n
+       " * Date  : " (format-time-string "%Y-%m-%d [%A, %j]") > \n
+       " */" > \n \n
+       "#include <iostream>" \n \n
+       "using namespace std;" \n \n
+       "int main(int argc, char* argv[])" \n
+       "{" > \n
+       > _ \n
+       "return 0;" > \n
+       "}" > \n)))
+
 
 ;; insert delimit text
 ;(defun insert-delimit-text-- ()
@@ -42,7 +112,7 @@
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 (require 'inf-ruby) ;; running ruby in emacs
 
-;; view .class file without junk symbols                                                                                                                                                                                                    
+;; view .class file without junk symbols
 (add-to-list 'file-name-handler-alist '("\\.class$" . javap-handler))
 (defun javap-handler (op &rest args)
   "Handle .class files by putting the output of javap in the buffer."
@@ -65,7 +135,7 @@
   "Run the real handler without the javap handler installed."
   (let ((inhibit-file-name-handlers
          (cons 'javap-handler
-               (and (eq inhibit-file-name-operation operation)                                                                                                                                                                              
+               (and (eq inhibit-file-name-operation operation)
                     inhibit-file-name-handlers)))
         (inhibit-file-name-operation operation))
     (apply operation args)))
@@ -89,8 +159,8 @@
   (font-lock-add-keywords nil '(("\"\\(\\(?:.\\|\n\\)*?[^\\]\\)\"" 0 font-lock-string-face))))
 (add-hook 'text-mode-hook 'add-quotes-to-font-lock-keywords)
 
-;; 文字列は 72 文字で折り返し(RFC2822)
-(setq-default fill-column 72)
+;; 文字列は 80 文字で折り返し(RFC2822)
+(setq-default fill-column 80)
 (setq paragraph-start '"^\\([ 　・○<\t\n\f]\\|(?[0-9a-zA-Z]+)\\)")
 (setq-default auto-fill-mode nil)
 
